@@ -1,33 +1,27 @@
-import enums.VehicleType;
-import models.ParkingLot;
-import models.Vehicle;
+import model.ParkingLot;
+import strategies.FlatRateCostStrategy;
 
 public class App {
     public static void main(String[] args)  {
-       ParkingLot parkingLot = new ParkingLot();
+      ParkingLot parkingLot = new ParkingLot();
+        
+        // Initialize the parking lot
+        parkingLot.init(2, 10); // 2 floors, 10 spaces per floor
 
-        // Initialize parking lot
-        parkingLot.init(2, 2, VehicleType.CAR);
-        parkingLot.configureCostStrategy(VehicleType.CAR, 20);
+        // Configure cost strategy
+        parkingLot.configureCostStrategy(new FlatRateCostStrategy());
 
-        // Add vehicles
-        Vehicle car1 = new Vehicle("ABC123", "Red", VehicleType.CAR);
-        Vehicle car2 = new Vehicle("XYZ456", "Blue", VehicleType.CAR);
-
-        parkingLot.parkVehicle(car1);
-        parkingLot.parkVehicle(car2);
+        // Adding vehicles
+        System.out.println(parkingLot.addVehicle("CAR", "ABC123", "Blue"));
+        System.out.println(parkingLot.addVehicle("CAR", "XYZ456", "Red"));
 
         // Display status
         parkingLot.displayStatus();
 
-        // Remove vehicle
-        parkingLot.removeVehicle("ABC123");
+        // Remove a vehicle
+        System.out.println(parkingLot.removeVehicle("ABC123"));
 
-        // Display updated status
+        // Display status again
         parkingLot.displayStatus();
-
-        // Calculate cost
-        int cost = parkingLot.calculateCost(VehicleType.CAR, 5);
-        System.out.println("Cost for 5 hours: " + cost);
     }
 }
